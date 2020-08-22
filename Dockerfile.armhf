@@ -3,7 +3,7 @@ FROM arm32v7/openjdk:8
 ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
-ARG gid=1000
+ARG gid=100
 ARG http_port=8080
 ARG agent_port=50000
 ARG JENKINS_HOME=/var/jenkins_home
