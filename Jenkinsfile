@@ -1,6 +1,6 @@
 pipeline {
 	environment {
-		registry = 'nazman/jenkins-armhf'
+		registry = 'vorsku/jenkins-armhf'
 		registryCredential = 'dockerhub'
 		DOCKER_BUILDKIT = '1'
 		DOCKER_CLI_EXPERIMENTAL = 'enabled'
@@ -8,7 +8,7 @@ pipeline {
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
 		JENKINS_UID = '1000'
-		JENKINS_GID = '1000'
+		JENKINS_GID = '100'
 		JENKINS_HOME = '/var/jenkins_home'
 		JENKINS_HTTP_PORT = '8080'
 		JENKINS_AGENT_PORT = '50000'
@@ -35,7 +35,7 @@ pipeline {
 		stage('Clone source') { // for display purposes
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/nazmang/jenkins-armhf.git'                
+                git 'https://github.com/vorsku/jenkins-armhf.git'                
             }
 		}	
 		stage('Preparation') {
@@ -62,7 +62,7 @@ pipeline {
 			steps {		
 				sh '''
 				docker buildx build --platform linux/arm/v7 \
-				--file ./Dockerfile.armhf --tag nazman/jenkins-armhf:$JENKINS_VERSION \
+				--file ./Dockerfile.armhf --tag vorsku/jenkins-armhf:$JENKINS_VERSION \
 				--tag nazman/jenkins-armhf:latest \
 				--build-arg JENKINS_VERSION=$JENKINS_VERSION \
 				--build-arg user=$JENKINS_USER \
@@ -81,11 +81,11 @@ pipeline {
 			steps{
 				script {
 					docker.withRegistry( '', registryCredential ) {
-						sh 'docker push nazman/jenkins-armhf:$JENKINS_VERSION'
-						sh 'docker push nazman/jenkins-armhf:latest'						
+						sh 'docker push vorsku/jenkins-armhf:$JENKINS_VERSION'
+						sh 'docker push vorsku/jenkins-armhf:latest'						
             		}
 				}
-				sh 'docker rmi nazman/jenkins-armhf:latest'
+				sh 'docker rmi vorsku/jenkins-armhf:latest'
 			}
 		}
 		
