@@ -1,17 +1,17 @@
 #!/bin/bash
 
-JENKINS_VERSION=2.219
+JENKINS_VERSION=2.235.5
 JENKINS_USER=jenkins
 JENKINS_GROUP=jenkins
 JENKINS_UID=1000
-JENKINS_GID=1000
+JENKINS_GID=100
 JENKINS_HOME=/var/jenkins_home
 JENKINS_HTTP_PORT=8080
 JENKINS_AGENT_PORT=50000
 JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${JENKINS_VERSION}/jenkins-war-${JENKINS_VERSION}.war
 TINI_VERSION=v0.16.1
 
-PREFIX="nazman"
+PREFIX="vorsku"
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RESOURCEDIR="$BASEDIR/docker"
 ARCH=${1:-armhf} 
