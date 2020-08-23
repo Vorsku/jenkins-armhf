@@ -19,8 +19,13 @@ RUN mkdir -p $JENKINS_HOME \
  # && groupadd -g ${gid} ${group} \
   && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-# Install Sudo so Jenkins can do docker builds
-RUN apt-get update && apt-get install sudo -y
+# Install Docker Client so Jenkins can do docker builds
+ENV DOCKERVERSION=19.03.12-ce
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/armhf/docker-${DOCKERVERSION}.tgz \
+  && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
+                 -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKERVERSION}.tgz
+
 
 # Jenkins home directory is a volume, so configuration and build history
 # can be persisted and survive image upgrades
