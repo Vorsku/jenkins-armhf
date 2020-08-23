@@ -63,7 +63,7 @@ pipeline {
 				sh '''
 				docker buildx build --platform linux/arm/v7 \
 				--file ./Dockerfile.armhf --tag vorsku/jenkins-armhf:$JENKINS_VERSION \
-				--tag nazman/jenkins-armhf:latest \
+				--tag vorsku/jenkins-armhf:latest \
 				--build-arg JENKINS_VERSION=$JENKINS_VERSION \
 				--build-arg user=$JENKINS_USER \
 				--build-arg group=$JENKINS_GROUP \
