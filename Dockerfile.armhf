@@ -26,7 +26,9 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/armhf/docker-${D
                  -C /usr/local/bin docker/docker \
   && rm docker-${DOCKERVERSION}.tgz
 
-RUN apt-get update && apt-get install sudo -y
+RUN apt-get update \
+  && apt-get install sudo -y \
+  && usermod -aG docker jenkins
 
 # Jenkins home directory is a volume, so configuration and build history
 # can be persisted and survive image upgrades
