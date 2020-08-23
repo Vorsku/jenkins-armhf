@@ -20,7 +20,7 @@ RUN mkdir -p $JENKINS_HOME \
   && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
 # Install Docker Client so Jenkins can do docker builds
-ENV DOCKERVERSION=19.03.12-ce
+ENV DOCKERVERSION=19.03.12
 RUN curl -fsSLO https://download.docker.com/linux/static/stable/armhf/docker-${DOCKERVERSION}.tgz \
   && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
                  -C /usr/local/bin docker/docker \
