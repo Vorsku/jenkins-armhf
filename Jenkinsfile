@@ -14,7 +14,7 @@ pipeline {
 		JENKINS_AGENT_PORT = '50000'
 		TINI_VERSION = 'v0.16.1'
 	}
-	agent DockerAgent
+	agent any
 	stages {
 		stage('Build buildx') {
 			steps{
