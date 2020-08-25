@@ -16,10 +16,6 @@ pipeline {
 	}
 	agent any
 	stages {
-                stage('Initialize'){
-                    def dockerHome = tool 'myDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
 		stage('Build buildx') {
 			steps{
 				git 'git://github.com/docker/buildx'
@@ -84,6 +80,8 @@ pipeline {
 		stage('Deploy Image') {
 			steps{
 				script {
+					def dockerHome = tool 'myDocker'
+                   			env.PATH = "${dockerHome}/bin:${env.PATH}"
 					docker.withRegistry( '', registryCredential ) {
 						sh 'docker push vorsku/jenkins-armhf:$JENKINS_VERSION'
 						sh 'docker push vorsku/jenkins-armhf:latest'						
