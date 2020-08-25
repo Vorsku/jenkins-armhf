@@ -21,7 +21,7 @@ pipeline {
 				git 'git://github.com/docker/buildx'
 				sh 'env'
 				script {
-					def dockerHome = tool 'myDocker'
+					def dockerHome = tool 'Docker'
                    			env.PATH = "${dockerHome}/bin:${env.PATH}"
 					def buildx = docker.build ("local/buildx", "--platform=local -o . git://github.com/docker/buildx")
 					buildx.run("--rm --privileged multiarch/qemu-user-static --reset -p yes i")
@@ -82,7 +82,7 @@ pipeline {
 		stage('Deploy Image') {
 			steps{
 				script {
-					def dockerHome = tool 'myDocker'
+					def dockerHome = tool 'Docker'
                    			env.PATH = "${dockerHome}/bin:${env.PATH}"
 					docker.withRegistry( '', registryCredential ) {
 						sh 'docker push vorsku/jenkins-armhf:$JENKINS_VERSION'
