@@ -16,17 +16,13 @@ pipeline {
 	}
 	agent any
 	stages {
-		stage('Initialize'){
-			steps{
-				def dockerHome = tool 'myDocker'
-				env.PATH = "${dockerHome}/bin:${env.PATH}"
-			}
-                }
 		stage('Build buildx') {
 			steps{
 				git 'git://github.com/docker/buildx'
 				sh 'env'
 				script {
+					def dockerHome = tool 'myDocker'
+					env.PATH = "${dockerHome}/bin:${env.PATH}"
 					def buildx = docker.build ("local/buildx", "--platform=local -o . git://github.com/docker/buildx")
 					buildx.run("--rm --privileged multiarch/qemu-user-static --reset -p yes i")
 				}
