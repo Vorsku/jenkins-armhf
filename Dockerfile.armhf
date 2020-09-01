@@ -10,7 +10,6 @@ ARG JENKINS_HOME=/var/jenkins_home
 
 # install docker cli with root
 USER root
-RUN add-apt-repository "deb [arch=armhf] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -19,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=armhf] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install -y docker-ce-cli && rm -rf /var/lib/apt/lists/*
     
 # drop back to the regular jenkins user - good practice
