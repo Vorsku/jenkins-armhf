@@ -30,9 +30,9 @@ RUN mkdir -p $JENKINS_HOME \
   && chown ${uid}:${gid} $JENKINS_HOME \
  # && groupadd -g ${gid} ${group} \
   && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user} \
-#  && groupadd -g 995 docker \
-#  && usermod -aG docker ${user} \
-  && chown -R ${uid}:${gid} /var/run/docker.sock
+  && groupadd -g 995 docker \
+  && usermod -aG docker ${user} \
+#  && chown -R ${uid}:${gid} /var/run/docker.sock
 
 # Jenkins home directory is a volume, so configuration and build history
 # can be persisted and survive image upgrades
