@@ -8,8 +8,16 @@ ARG http_port=8080
 ARG agent_port=50000
 ARG JENKINS_HOME=/var/jenkins_home
 
+# install docker-cli with root
+USER root
+RUN apt-get update && apt-get install -y \
+    docker-cli \
+    && rm -rf /var/lib/apt/lists/*
+    
+# drop back to the regular jenkins user - good practice
+USER ${user}
+
 ENV JENKINS_HOME $JENKINS_HOME
-ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
@@ -40,12 +48,6 @@ ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
 ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
 
-# for main web interface:
-EXPOSE ${http_port}
-
-# will be used by attached slave agents:
-EXPOSE ${agent_port}
-
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
 USER ${user}
@@ -59,3 +61,9 @@ ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY docker/plugins.sh /usr/local/bin/plugins.sh
 COPY docker/install-plugins.sh /usr/local/bin/install-plugins.sh
+
+# for main web interface:
+EXPOSE ${http_port}
+
+# will be used by attached slave agents:
+EXPOSE ${agent_port}
