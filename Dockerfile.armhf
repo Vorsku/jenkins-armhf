@@ -9,10 +9,11 @@ ARG agent_port=50000
 ARG JENKINS_HOME=/var/jenkins_home
 
 # install docker cli and openjdk
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
+    git \
     gnupg-agent \
     openjdk-8-jre-headless \
     software-properties-common \
