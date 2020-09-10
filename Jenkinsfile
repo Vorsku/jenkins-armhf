@@ -1,9 +1,5 @@
 pipeline {
 	environment {
-		registry = 'vorsku/jenkins-armhf'
-		registryCredential = 'dockerhub'
-		DOCKER_BUILDKIT = '1'
-		DOCKER_CLI_EXPERIMENTAL = 'enabled'
 		JENKINS_VERSION = '2.235.5'
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
@@ -62,7 +58,7 @@ pipeline {
 		stage('Deploy Image') {
 			steps{
 				script {
-					docker.withRegistry( '', registryCredential ) {
+					withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
 						sh 'docker push vorsku/jenkins-armhf:$JENKINS_VERSION'
 						sh 'docker push vorsku/jenkins-armhf:latest'						
             		}
