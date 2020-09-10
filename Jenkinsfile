@@ -16,30 +16,12 @@ pipeline {
 	}
 	agent any
 	stages {
-		stage('Build buildx') {
-			steps{
-				git 'git://github.com/docker/buildx'
-				sh 'env'
-				script {
-					def buildx = docker.build ("local/buildx", "--platform=local -o . git://github.com/docker/buildx")
-					buildx.run("--rm --privileged multiarch/qemu-user-static --reset -p yes i")
-				}
-				sh '''
-					mkdir -p ~/.docker/cli-plugins && mv buildx ~/.docker/cli-plugins/docker-buildx 
-					docker buildx rm
-					docker buildx inspect --bootstrap 					
-					docker buildx create --name multibuilder --use
-				'''	
-			}
-		}
-		stage('Clone source') { // for display purposes
+		stage('Clone source') {
             steps {
-                // Get some code from a GitHub repository
                 git 'https://github.com/vorsku/jenkins-armhf.git'                
             }
 		}	
 		stage('Preparation') {
-			// Run the 
 			steps {			    
 				sh '''
                 mkdir -p docker
@@ -61,7 +43,7 @@ pipeline {
 		stage ('Build'){
 			steps {		
 				sh '''
-				docker buildx build --platform linux/arm/v7 \
+				docker build --rm \
 				--file ./Dockerfile.armhf --tag vorsku/jenkins-armhf:$JENKINS_VERSION \
 				--tag vorsku/jenkins-armhf:latest \
 				--build-arg JENKINS_VERSION=$JENKINS_VERSION \
@@ -73,7 +55,7 @@ pipeline {
 				--build-arg http_port=$JENKINS_HTTP_PORT \
 				--build-arg agent_port=$JENKINS_AGENT_PORT \
 				--build-arg JENKINS_SHA=$JENKINS_SHA \
-				--load . 
+				--no-cache . 
 				'''	
 			}
 		}
