@@ -1,6 +1,6 @@
 pipeline {
 	environment {
-		JENKINS_VERSION = '2.235.5'
+		JENKINS_VERSION = '2.249.1'
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
 		JENKINS_UID = '1000'
