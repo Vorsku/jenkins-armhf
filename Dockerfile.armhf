@@ -51,7 +51,7 @@ COPY docker/tini	/sbin/tini
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
 
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.164.1}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.249.1}
 ENV JENKINS_UC https://updates.jenkins.io
 ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
 ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
