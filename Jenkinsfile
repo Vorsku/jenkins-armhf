@@ -1,6 +1,10 @@
 pipeline {
 	environment {
-		JENKINS_VERSION = '2.235.5'
+		PREFIX = 'vorsku'
+		REPO = 'jenkins-armhf'
+		JENKINS_VERSION = '2.249.1'
+		VERSION_LATEST = 'dev'
+		
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
 		JENKINS_UID = '1000'
@@ -40,8 +44,8 @@ pipeline {
 			steps {		
 				sh '''
 				docker build --rm \
-				--file ./Dockerfile.armhf --tag vorsku/jenkins-armhf:$JENKINS_VERSION \
-				--tag vorsku/jenkins-armhf:latest \
+				--file ./Dockerfile.armhf --tag $PREFIX/$REPO:$JENKINS_VERSION-$VERSION_LATEST \
+				--tag $PREFIX/$REPO:$VERSION_LATEST \
 				--build-arg JENKINS_VERSION=$JENKINS_VERSION \
 				--build-arg user=$JENKINS_USER \
 				--build-arg group=$JENKINS_GROUP \
@@ -59,11 +63,11 @@ pipeline {
 			steps{
 				script {
 					withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-						sh 'docker push vorsku/jenkins-armhf:$JENKINS_VERSION'
-						sh 'docker push vorsku/jenkins-armhf:latest'						
+						sh 'docker push $PREFIX/$REPO:$JENKINS_VERSION-$VERSION_LATEST'
+						sh 'docker push $PREFIX/$REPO:$VERSION_LATEST'						
             		}
 				}
-				sh 'docker rmi vorsku/jenkins-armhf:latest'
+				sh 'docker rmi $PREFIX/$REPO:$VERSION_LATEST'
 			}
 		}
 		
