@@ -3,7 +3,7 @@ pipeline {
 		PREFIX = 'vorsku'
 		REPO = 'jenkins-armhf'
 		JENKINS_VERSION = '2.249.1'
-		VERSION_LATEST = 'dev'
+		VERSION_LATEST = 'latest'
 		
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
