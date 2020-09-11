@@ -1,6 +1,7 @@
 #!/bin/bash
 
 JENKINS_VERSION=2.249.1
+LATEST_VERSION=dev
 JENKINS_USER=jenkins
 JENKINS_GROUP=jenkins
 JENKINS_UID=1000
@@ -12,6 +13,7 @@ JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/$
 TINI_VERSION=v0.16.1
 
 PREFIX="vorsku"
+REPO="jenkins-armhf"
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RESOURCEDIR="$BASEDIR/docker"
 ARCH=${1:-armhf} 
@@ -32,7 +34,7 @@ if [ ! -d "$RESOURCEDIR" ]; then
 fi
 
 docker build \
-	--rm --tag $PREFIX/jenkins-$ARCH:$JENKINS_VERSION \
+	--rm --tag $PREFIX/$REPO:$JENKINS_VERSION \
 	--build-arg JENKINS_VERSION=$JENKINS_VERSION \
 	--build-arg user=$JENKINS_USER \
 	--build-arg group=$JENKINS_GROUP \
@@ -46,6 +48,6 @@ docker build \
 	--build-arg TINI_VERSION=$TINI_VERSION \
 	--no-cache --file Dockerfile.$ARCH .
 	
-docker tag $PREFIX/jenkins-$ARCH:$JENKINS_VERSION $PREFIX/jenkins-$ARCH:latest
-docker push $PREFIX/jenkins-$ARCH:$JENKINS_VERSION
-docker push $PREFIX/jenkins-$ARCH:latest
+docker tag $PREFIX/$REPO:$JENKINS_VERSION $PREFIX/$REPO:$LATEST_VERSION
+docker push $PREFIX/$REPO:$JENKINS_VERSION
+docker push $PREFIX/$REPO:$LATEST_VERSION
