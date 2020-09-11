@@ -44,7 +44,7 @@ pipeline {
 			steps {		
 				sh '''
 				docker build --rm \
-				--file ./Dockerfile.armhf --tag $PREFIX/$REPO:$JENKINS_VERSION-VERSION_LATEST \
+				--file ./Dockerfile.armhf --tag $PREFIX/$REPO:$JENKINS_VERSION-$VERSION_LATEST \
 				--tag $PREFIX/$REPO:$VERSION_LATEST \
 				--build-arg JENKINS_VERSION=$JENKINS_VERSION \
 				--build-arg user=$JENKINS_USER \
@@ -63,7 +63,7 @@ pipeline {
 			steps{
 				script {
 					withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-						sh 'docker push $PREFIX/$REPO:$JENKINS_VERSION-VERSION_LATEST'
+						sh 'docker push $PREFIX/$REPO:$JENKINS_VERSION-$VERSION_LATEST'
 						sh 'docker push $PREFIX/$REPO:$VERSION_LATEST'						
             		}
 				}
