@@ -2,7 +2,7 @@ pipeline {
 	environment {
 		PREFIX = 'vorsku'
 		REPO = 'jenkins-armhf'
-		JENKINS_VERSION = '2.249.1'
+		JENKINS_VERSION = '2.249.3'
 		VERSION_LATEST = 'latest'
 		
 		JENKINS_USER = 'jenkins'
