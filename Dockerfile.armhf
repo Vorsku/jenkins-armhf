@@ -30,7 +30,7 @@ ENV JENKINS_HOME $JENKINS_HOME
 # ensure you use the same uid
 RUN mkdir -p $JENKINS_HOME \
   && chown ${uid}:${gid} $JENKINS_HOME \
- # && groupadd -g ${gid} ${group} \
+  && groupadd -g ${gid} ${group} \
   && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user} \
   && groupadd -g 995 docker \
   && usermod -aG docker ${user} 
