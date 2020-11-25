@@ -8,7 +8,7 @@ pipeline {
 		JENKINS_USER = 'jenkins'
 		JENKINS_GROUP = 'jenkins'
 		JENKINS_UID = '1000'
-		JENKINS_GID = '100'
+		JENKINS_GID = '1000'
 		JENKINS_HOME = '/var/jenkins_home'
 		JENKINS_HTTP_PORT = '8080'
 		JENKINS_AGENT_PORT = '50000'
